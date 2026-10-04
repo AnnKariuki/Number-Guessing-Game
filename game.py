@@ -6,17 +6,20 @@ def main():
     # The print() function has an optional keyword argument named end that lets us choose how we end each line. end="" overrides python default \n
     print("Welcome to the Number Guessing Game!\nI'm thinking of a number between 1 and 100.\nGuess the correct number and win the game\n")
     rounds = 1
-    high_scores = {
-        1: math.inf,
-        2: math.inf,
-        3: math.inf
-    }
-
+    # one source of truth for what difficultly levels exist. we don't want to have to change two dictionaries when we add a difficulty level eg expert level
     difficulties = {
         1: {"name": "Easy", "chances": 10},
         2: {"name": "Medium", "chances": 5},
-        3: {"name": "Hard", "chances": 3},
+        3: {"name": "Hard", "chances": 3}
     }
+    high_scores = {key: math.inf for key in difficulties} # remember we don't have to do difficulties.keys() because iterating over a dictionary already iterates over its keys.
+    # high_scores = {difficulties[key]: math.inf for key in difficulties.keys()} # TypeError: unhashable type: 'dict'. difficulties[key] evaluates to a dictionary and we cannot use a dictionary as a key inside the high_scores dictionary.
+    # The TypeError: unhashable type: 'dict' occurs when you attempt to use a mutable dictionary as a dictionary key or add it to a set. In Python, sets and dictionary keys require hashable (immutable) objects—like strings, integers, or tuples—so that their values remain constant and can be quickly looked up
+    # high_scores = {
+    #     1: math.inf,
+    #     2: math.inf,
+    #     3: math.inf
+    # }
     # we have 3 values that serve the same purpose so we replaced them with a dictionary that associates its difficulty with its high score
     # highest_score_easy = math.inf # float('inf')
     # highest_score_medium = math.inf 
@@ -26,28 +29,30 @@ def main():
     # while the game is running
     while True:
         # starting up the round. 
-        print(f"Please select the difficulty level of round {rounds}:\n1. Easy (10 chances)\n2. Medium (5 chances)\n3. Hard (3 chances)\n")
+        print(f"Please select the difficulty level of round {rounds}:")
+        for key, value in difficulties.items():
+            print(f"{key}. {value['name']} ({value['chances']} chances)")
 
         difficulty_input = input("Enter your choice: ")
         if not difficulty_input.isdigit():
             raise ValueError("Difficulty must be an integer")
         difficulty = int(difficulty_input)
         # picked {} rather than set([1,2,3]) constructor since the constructor build up the set in o (n) time since we have to iterate over the list to populate set. in this case it doesn't really matter since there are 3 values o(3) = o(1)
-        if difficulty not in {1,2,3}:
-            raise ValueError("Difficulty level must be 1, 2, 3")
+        if difficulty not in difficulties: # we don't need to check  difficulties.keys() when checking whether a difficulty exists in a dictionary. Python checks dictionary keys by default.
+            raise ValueError(f"Difficulty level must be one of {[*difficulties]}") # list(difficulties.keys())
 
         print()
-
-        chances = 0
-        if difficulty == 1:
-            print("Great! You have selected the Easy difficulty level. You have 10 chances to guess the correct number.\n")
-            chances = 10
-        elif difficulty == 2:
-            print("Great! You have selected the Medium difficulty level. You have 5 chances to guess the correct number.\n")
-            chances = 5
-        elif difficulty == 3:
-            print("Great! You have selected the Hard difficulty level. You have 3 chances to guess the correct number.\n")
-            chances = 3
+        chances = difficulties[difficulty]['chances']
+        print(f"Great! You have selected the {difficulties[difficulty]['name']} difficulty level. You have {chances} chances to guess the correct number.\n")
+        # if difficulty == 1:
+        #     print("Great! You have selected the Easy difficulty level. You have 10 chances to guess the correct number.\n")
+        #     chances = 10
+        # elif difficulty == 2:
+        #     print("Great! You have selected the Medium difficulty level. You have 5 chances to guess the correct number.\n")
+        #     chances = 5
+        # elif difficulty == 3:
+        #     print("Great! You have selected the Hard difficulty level. You have 3 chances to guess the correct number.\n")
+        #     chances = 3
 
         print(f"Lets start the round {rounds}")
         # we need a number to be guessed for this round
