@@ -6,9 +6,21 @@ def main():
     # The print() function has an optional keyword argument named end that lets us choose how we end each line. end="" overrides python default \n
     print("Welcome to the Number Guessing Game!\nI'm thinking of a number between 1 and 100.\nGuess the correct number and win the game\n")
     rounds = 1
-    highest_score_easy = math.inf # float('inf')
-    highest_score_medium = math.inf 
-    highest_score_hard = math.inf 
+    high_scores = {
+        1: math.inf,
+        2: math.inf,
+        3: math.inf
+    }
+
+    difficulties = {
+        1: {"name": "Easy", "chances": 10},
+        2: {"name": "Medium", "chances": 5},
+        3: {"name": "Hard", "chances": 3},
+    }
+    # we have 3 values that serve the same purpose so we replaced them with a dictionary that associates its difficulty with its high score
+    # highest_score_easy = math.inf # float('inf')
+    # highest_score_medium = math.inf 
+    # highest_score_hard = math.inf 
     # i don't want to show the high score of a level the user did not play
 
     # while the game is running
@@ -58,12 +70,9 @@ def main():
                 end_time = time.time()
                 print(f"Congratulations! You guessed the correct number in {attempts} attempts and it took you {end_time - start_time} seconds. Impressive!")
                 won = True
-                if difficulty == 1:
-                    highest_score_easy = min(highest_score_easy, attempts)
-                if difficulty == 2:
-                    highest_score_medium = min(highest_score_medium, attempts)
-                if difficulty == 3:
-                    highest_score_hard = min(highest_score_hard, attempts)
+                # with the dictionary we don't need these conditional. we are doing the same thing in each branch
+                high_scores[difficulty] = min(high_scores[difficulty], attempts)
+                # highest_score_easy = min(highest_score_easy, attempts)
                 break
 
             if user_guess != number_to_be_guessed:
@@ -78,7 +87,7 @@ def main():
         print("Would you like to play another round?\n")
         another_round = input("Yes or No: ")
         # if anything other than yes
-        if not another_round.lower() == "yes":
+        if another_round.lower() != "yes":
             # break out of the main for loop
             break
         print()
@@ -87,18 +96,21 @@ def main():
     #  The second check is for the case that a user plays a round or many rounds and wins nothing, we should not print their high score cause they don't have one. without this we 
     # would have For Easy/Medium/Hard level your highest score was inf
     # if played_in_easy_mode and highest_score_easy < math.inf: we don't need the first condition cause if the highest score for the level moved downwards it means the level was played
-    if highest_score_easy < math.inf: 
-        print(f"For Easy level your highest score (fewest number of attempts it took to guess the number) was {highest_score_easy}")
-    if highest_score_medium < math.inf:
-        print(f"For Medium level your highest score (fewest number of attempts it took to guess the number) was {highest_score_medium}")
-    if highest_score_hard < math.inf:
-        print(f"For Hard level your highest score (fewest number of attempts it took to guess the number) was {highest_score_hard}")
+    for key, value in high_scores.items():
+        if value < math.inf:
+            print(f"Your best performance on {difficulties[key]['name']} difficulty was guessing the number in {value} attempts")
+    # if high_scores[1] < math.inf: 
+    #     print(f"For Easy level your highest score (fewest number of attempts it took to guess the number) was {high_scores[1]}")
+    # if high_scores[2] < math.inf:
+    #     print(f"For Medium level your highest score (fewest number of attempts it took to guess the number) was {high_scores[2]}")
+    # if high_scores[3] < math.inf:
+    #     print(f"For Hard level your highest score (fewest number of attempts it took to guess the number) was {high_scores[3]}")
     print("\nThank you for playing. Goodbye")
 
 if __name__ == "__main__":
     main()
 
 
-    # Question; do we want each round to have it's own difficulty or they pick the difficulty once and that is the difficulty for all rounds
-    # the additional requirements says "Keep track of the user's high score (i.e., the fewest number of attempts it took to guess the number under a specific difficulty level)."
-    # I think this means every round different difficulty level
+# Question; do we want each round to have it's own difficulty or they pick the difficulty once and that is the difficulty for all rounds
+# the additional requirements says "Keep track of the user's high score (i.e., the fewest number of attempts it took to guess the number under a specific difficulty level)."
+# I think this means every round different difficulty level
