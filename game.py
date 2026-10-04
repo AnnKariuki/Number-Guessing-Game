@@ -45,7 +45,7 @@ def main():
 
         print(f"Lets start the round {rounds}")
         # we need a number to be guessed for this round
-        number_to_be_guessed = random.randint(2, 99) # inclusive of the boundary numbers and since we want between 1 and 100 we use 2 and 99 as the endpoints
+        number_to_be_guessed = 1 #random.randint(2, 99) # inclusive of the boundary numbers and since we want between 1 and 100 we use 2 and 99 as the endpoints
         # keep track of the attempts in this round
         attempts = 0
         won = False
@@ -92,11 +92,12 @@ def main():
     print("\nIn summary\n")
     #  The second check is for the case that a user plays a round or many rounds and wins nothing, we should not print their high score cause they don't have one. without this we 
     # would have For Easy/Medium/Hard level your highest score was inf
-    if played_in_easy_mode and highest_score_easy < math.inf: 
+    # if played_in_easy_mode and highest_score_easy < math.inf: we don't need the first condition cause if the highest score for the level moved downwards it means the level was played
+    if highest_score_easy < math.inf: 
         print(f"For Easy level your highest score (fewest number of attempts it took to guess the number) was {highest_score_easy}")
-    if played_in_medium_mode and highest_score_medium < math.inf:
+    if highest_score_medium < math.inf:
         print(f"For Medium level your highest score (fewest number of attempts it took to guess the number) was {highest_score_medium}")
-    if played_in_hard_mode and highest_score_hard < math.inf:
+    if highest_score_hard < math.inf:
         print(f"For Hard level your highest score (fewest number of attempts it took to guess the number) was {highest_score_hard}")
     print("\nThank you for playing. Goodbye")
 
