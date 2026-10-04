@@ -10,9 +10,6 @@ def main():
     highest_score_medium = math.inf 
     highest_score_hard = math.inf 
     # i don't want to show the high score of a level the user did not play
-    played_in_easy_mode = False
-    played_in_medium_mode = False
-    played_in_hard_mode = False
 
     # while the game is running
     while True:
@@ -33,15 +30,12 @@ def main():
         if difficulty == 1:
             print("Great! You have selected the Easy difficulty level. You have 10 chances to guess the correct number.\n")
             chances = 10
-            played_in_easy_mode = True
         elif difficulty == 2:
             print("Great! You have selected the Medium difficulty level. You have 5 chances to guess the correct number.\n")
             chances = 5
-            played_in_medium_mode = True
         elif difficulty == 3:
             print("Great! You have selected the Hard difficulty level. You have 3 chances to guess the correct number.\n")
             chances = 3
-            played_in_hard_mode = True
 
         print(f"Lets start the round {rounds}")
         # we need a number to be guessed for this round
