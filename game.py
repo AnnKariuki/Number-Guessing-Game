@@ -79,12 +79,12 @@ def main():
                 high_scores[difficulty] = min(high_scores[difficulty], attempts)
                 # highest_score_easy = min(highest_score_easy, attempts)
                 break
-
-            if user_guess != number_to_be_guessed:
-                if number_to_be_guessed < user_guess:
-                    print(f"Incorrect! The number is less than {user_guess}")
-                elif number_to_be_guessed > user_guess:
-                    print(f"Incorrect! The number is greater than {user_guess}")
+            # we don't need this check. it is redundant. if guess is correct we break out of the loop
+            #if user_guess != number_to_be_guessed:
+            elif number_to_be_guessed < user_guess:
+                print(f"Incorrect! The number is less than {user_guess}")
+            else:
+                print(f"Incorrect! The number is greater than {user_guess}")
         # if we break out the loop without winning ie attempts is greater than chances
         if not won: # this is the same as if won == False or if won is False
             print(f"You ran out of chances")
