@@ -59,7 +59,8 @@ def main():
         number_to_be_guessed = 1 #random.randint(2, 99) # inclusive of the boundary numbers and since we want between 1 and 100 we use 2 and 99 as the endpoints
         # keep track of the attempts in this round
         attempts = 0
-        won = False
+        # won = False # instead of this flag we will use the while-else loop where the else statement is executed only when the while loops are executed completely and the condition becomes
+        # false.  If we break the while loop using the "break" statement then the else statement will not be executed. the loop needs to end naturally
         start_time = time.perf_counter() # look into this tomorrow why not time.time. 
         # time.time is adjustable meaning have the potential to be very different from one call to time.time() to the next.
         # time.time is not monotonic(not increasing) meaning that it may report times in the past relative to times that have already been returned.
@@ -78,7 +79,7 @@ def main():
             if user_guess == number_to_be_guessed:
                 end_time = time.perf_counter()
                 print(f"Congratulations! You guessed the correct number in {attempts} attempts and it took you {end_time - start_time} seconds. Impressive!")
-                won = True
+                # won = True
                 # with the dictionary we don't need these conditional. we are doing the same thing in each branch
                 high_scores[difficulty] = min(high_scores[difficulty], attempts)
                 # highest_score_easy = min(highest_score_easy, attempts)
@@ -90,7 +91,9 @@ def main():
             else:
                 print(f"Incorrect! The number is greater than {user_guess}")
         # if we break out the loop without winning ie attempts is greater than chances
-        if not won: # this is the same as if won == False or if won is False
+        # if not won: # this is the same as if won == False or if won is False
+        #     print(f"You ran out of chances")
+        else:
             print(f"You ran out of chances")
         print()
         print("Would you like to play another round?\n")
