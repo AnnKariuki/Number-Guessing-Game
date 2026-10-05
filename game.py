@@ -60,7 +60,11 @@ def main():
         # keep track of the attempts in this round
         attempts = 0
         won = False
-        start_time = time.time()
+        start_time = time.perf_counter() # look into this tomorrow why not time.time. 
+        # time.time is adjustable meaning have the potential to be very different from one call to time.time() to the next.
+        # time.time is not monotonic(not increasing) meaning that it may report times in the past relative to times that have already been returned.
+        # time.time has lower precision
+        # time.perf_counter() is used when you need a high-precision timer for benchmarking Python code becuase it is non-adjustable, monotonic and has high precision
         while attempts < chances:
             # on attempt 1 user guesses
             user_input = input("Enter your guess: ")
@@ -72,7 +76,7 @@ def main():
             # increment attempts after validating input
             attempts += 1
             if user_guess == number_to_be_guessed:
-                end_time = time.time()
+                end_time = time.perf_counter()
                 print(f"Congratulations! You guessed the correct number in {attempts} attempts and it took you {end_time - start_time} seconds. Impressive!")
                 won = True
                 # with the dictionary we don't need these conditional. we are doing the same thing in each branch
@@ -80,7 +84,7 @@ def main():
                 # highest_score_easy = min(highest_score_easy, attempts)
                 break
             # we don't need this check. it is redundant. if guess is correct we break out of the loop
-            #if user_guess != number_to_be_guessed:
+            # if user_guess != number_to_be_guessed:
             elif number_to_be_guessed < user_guess:
                 print(f"Incorrect! The number is less than {user_guess}")
             else:
