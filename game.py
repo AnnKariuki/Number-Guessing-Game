@@ -66,6 +66,7 @@ def main():
         print()
         rounds += 1
     print("\nIn summary\n")
+    print(f"You played a total of {rounds} rounds")
     won_a_game = False
     for key, value in high_scores.items():
         if value < math.inf:
