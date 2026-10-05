@@ -14,29 +14,38 @@ def main():
         print(f"Please select the difficulty level of round {rounds}:")
         for key, value in difficulties.items():
             print(f"{key}. {value['name']} ({value['chances']} chances)")
-
-        difficulty_input = input("Enter your choice: ")
-        if not difficulty_input.isdigit():
-            raise ValueError("Difficulty must be an integer")
+        retries = 0
+        max_retries = 3
+        while retries < max_retries:
+            difficulty_input = input("Enter your choice: ")
+            if difficulty_input.isdigit() and int(difficulty_input) in difficulties:
+                break
+            print(f"Invalid Input. Difficulty Level must be an integer and/or must be one of {[*difficulties]}.\n")
+            retries += 1
+        else:
+            raise ValueError(f"Exceeded maximum attempts ({max_retries}) to input a valid difficulty level. Exiting program.")
+        
         difficulty = int(difficulty_input)
-        if difficulty not in difficulties: 
-            raise ValueError(f"Difficulty level must be one of {[*difficulties]}")
-
         print()
         chances = difficulties[difficulty]['chances']
         print(f"Great! You have selected the {difficulties[difficulty]['name']} difficulty level. You have {chances} chances to guess the correct number.\n")
 
         print(f"Let's start the round {rounds}")
-        number_to_be_guessed = 1
+        number_to_be_guessed = 1 # random.randint(1, 100)
         attempts = 0
         start_time = time.perf_counter()
         while attempts < chances:
-            user_input = input("Enter your guess: ")
-            if not user_input.isdigit():
-                raise ValueError("Guess must be an integer")
+            retries = 0
+            max_retries = 3
+            while retries < max_retries:
+                user_input = input("Enter your guess: ")
+                if user_input.isdigit() and int(user_input) >= 1 and int(user_input) <= 100:
+                    break
+                print("Guess must be an integer and must be between 1 and 100\n")
+                retries += 1
+            else:
+                raise ValueError(f"Exceeded maximum attempts ({max_retries}) to input a valid guess. Exiting program.")
             user_guess = int(user_input)
-            if user_guess < 1 or user_guess > 100:
-                raise ValueError("Guess must be an integer between 1 and 100")
             attempts += 1
             if user_guess == number_to_be_guessed:
                 end_time = time.perf_counter()
@@ -52,7 +61,7 @@ def main():
         print()
         print("Would you like to play another round?\n")
         another_round = input("Yes or No: ")
-        if another_round.lower() != "yes":
+        if not another_round.strip().lower().startswith('y'):
             break
         print()
         rounds += 1
