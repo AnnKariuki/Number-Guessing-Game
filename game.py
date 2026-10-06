@@ -66,47 +66,7 @@ def get_hint(chances: int, number_to_be_guessed: int, user_guess: int) -> int:
         elif number_to_be_guessed % 2 == 1:
             print(f"The number is odd")
     elif type_of_hint == "divisibility_hint":
-        if number_to_be_guessed % 97 == 0:
-            print("Number is divisible by 97")
-        elif number_to_be_guessed % 89 == 0:
-            print("Number is divisible by 89")
-        elif number_to_be_guessed % 83 == 0:
-            print("Number is divisible by 83")
-        elif number_to_be_guessed % 79 == 0:
-            print("Number is divisible by 79")
-        elif number_to_be_guessed % 73 == 0:
-            print("Number is divisible by 73")
-        elif number_to_be_guessed % 71 == 0:
-            print("Number is divisible by 71")
-        elif number_to_be_guessed % 67 == 0:
-            print("Number is divisible by 67")
-        elif number_to_be_guessed % 61 == 0:
-            print("Number is divisible by 61")
-        elif number_to_be_guessed % 59 == 0:
-            print("Number is divisible by 59")
-        elif number_to_be_guessed % 53 == 0:
-            print("Number is divisible by 53")
-        elif number_to_be_guessed % 47 == 0:
-            print("Number is divisible by 47")
-        elif number_to_be_guessed % 43 == 0:
-            print("Number is divisible by 43")
-        elif number_to_be_guessed % 41 == 0:
-            print("Number is divisible by 41")
-        elif number_to_be_guessed % 37 == 0:
-            print("Number is divisible by 37")
-        elif number_to_be_guessed % 31 == 0:
-            print("Number is divisible by 31")
-        elif number_to_be_guessed % 29 == 0:
-            print("Number is divisible by 29")
-        elif number_to_be_guessed % 23 == 0:
-            print("Number is divisible by 23")
-        elif number_to_be_guessed % 19 == 0:
-            print("Number is divisible by 19")
-        elif number_to_be_guessed % 17 == 0:
-            print("Number is divisible by 17")
-        elif number_to_be_guessed % 13 == 0:
-            print("Number is divisible by 13")
-        elif number_to_be_guessed % 11 == 0:
+        if number_to_be_guessed % 11 == 0:
             print("Number is divisible by 11")
         elif number_to_be_guessed % 7 == 0:
             print("Number is divisible by 7")
@@ -116,8 +76,8 @@ def get_hint(chances: int, number_to_be_guessed: int, user_guess: int) -> int:
             print("Number is divisible by 3")
         elif number_to_be_guessed % 2 == 0:
             print("Number is divisible by 2")
-        elif number_to_be_guessed % 1 == 0:
-            print("Number is divisible by 1")
+        else:
+            print("Number is not divisible by 2, 3, 5, 7, or 11")
     elif type_of_hint == "distance_hint":
         distance = number_to_be_guessed - user_guess
         print(f"You are within {abs(distance)} of the correct value")
