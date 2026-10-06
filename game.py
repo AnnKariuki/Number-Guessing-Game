@@ -114,7 +114,7 @@ def play_round(difficulty: int, rounds: int) -> int| None:
             return attempts
         if attempts + 1 < chances:
             chances = get_hint(chances, number_to_be_guessed, user_guess)
-    print(f"You ran out of chances")
+    print("You ran out of chances")
     return None
 
 def wants_another_round() -> bool:
@@ -150,5 +150,6 @@ def main() -> None:
         print()
         rounds += 1
     display_summary(rounds, high_scores)
+
 if __name__ == "__main__":
     main()

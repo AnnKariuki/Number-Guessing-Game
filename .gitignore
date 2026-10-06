@@ -2,3 +2,4 @@ venv/
 .mypy_cache/
 decisions.py
 .vscode/
+__pycache__
