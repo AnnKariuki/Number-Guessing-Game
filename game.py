@@ -40,9 +40,105 @@ def get_user_guess() -> int:
         retries += 1
     raise ValueError(f"Exceeded maximum attempts ({MAX_RETRIES}) to input a valid guess. Exiting program.")
 
+def get_hint(chances: int, number_to_be_guessed: int, user_guess: int) -> int:
+    hint_ask = input("Would you like a hint? Caution: Accepting a hint costs one chance. Yes or No:")
+    if not hint_ask.strip().lower().startswith('y'):
+        return chances
+    hint_dict = {
+        1: "range_hint",
+        2: "parity_hint",
+        3: "divisibility_hint",
+        4: "distance_hint",
+        5: "digit_hint",
+        6: "comparison_hint"
+    }
+    type_of_hint = hint_dict[random.randint(1,6)] 
+    if type_of_hint == "range_hint":
+        lower_bound = (number_to_be_guessed // 10) * 10
+        higher_bound = lower_bound + 10
+        if number_to_be_guessed == 100:
+            lower_bound = (number_to_be_guessed - 1) // 10 * 10
+            higher_bound = lower_bound + 10
+        print(f"The number is between {lower_bound} and {higher_bound}")
+    elif type_of_hint == "parity_hint":
+        if number_to_be_guessed % 2 == 0:
+            print(f"The number is even")
+        elif number_to_be_guessed % 2 == 1:
+            print(f"The number is odd")
+    elif type_of_hint == "divisibility_hint":
+        if number_to_be_guessed % 97 == 0:
+            print("Number is divisible by 97")
+        elif number_to_be_guessed % 89 == 0:
+            print("Number is divisible by 89")
+        elif number_to_be_guessed % 83 == 0:
+            print("Number is divisible by 83")
+        elif number_to_be_guessed % 79 == 0:
+            print("Number is divisible by 79")
+        elif number_to_be_guessed % 73 == 0:
+            print("Number is divisible by 73")
+        elif number_to_be_guessed % 71 == 0:
+            print("Number is divisible by 71")
+        elif number_to_be_guessed % 67 == 0:
+            print("Number is divisible by 67")
+        elif number_to_be_guessed % 61 == 0:
+            print("Number is divisible by 61")
+        elif number_to_be_guessed % 59 == 0:
+            print("Number is divisible by 59")
+        elif number_to_be_guessed % 53 == 0:
+            print("Number is divisible by 53")
+        elif number_to_be_guessed % 47 == 0:
+            print("Number is divisible by 47")
+        elif number_to_be_guessed % 43 == 0:
+            print("Number is divisible by 43")
+        elif number_to_be_guessed % 41 == 0:
+            print("Number is divisible by 41")
+        elif number_to_be_guessed % 37 == 0:
+            print("Number is divisible by 37")
+        elif number_to_be_guessed % 31 == 0:
+            print("Number is divisible by 31")
+        elif number_to_be_guessed % 29 == 0:
+            print("Number is divisible by 29")
+        elif number_to_be_guessed % 23 == 0:
+            print("Number is divisible by 23")
+        elif number_to_be_guessed % 19 == 0:
+            print("Number is divisible by 19")
+        elif number_to_be_guessed % 17 == 0:
+            print("Number is divisible by 17")
+        elif number_to_be_guessed % 13 == 0:
+            print("Number is divisible by 13")
+        elif number_to_be_guessed % 11 == 0:
+            print("Number is divisible by 11")
+        elif number_to_be_guessed % 7 == 0:
+            print("Number is divisible by 7")
+        elif number_to_be_guessed % 5 == 0:
+            print("Number is divisible by 5")
+        elif number_to_be_guessed % 3 == 0:
+            print("Number is divisible by 3")
+        elif number_to_be_guessed % 2 == 0:
+            print("Number is divisible by 2")
+        elif number_to_be_guessed % 1 == 0:
+            print("Number is divisible by 1")
+    elif type_of_hint == "distance_hint":
+        distance = number_to_be_guessed - user_guess
+        print(f"You are within {abs(distance)} of the correct value")
+    elif type_of_hint == "digit_hint":
+        if 1 <= number_to_be_guessed <= 9:
+            print("The number has 1 digit")
+        elif 10 <= number_to_be_guessed <= 99:
+            print("The number has 2 digits")
+        elif number_to_be_guessed == 100:
+            print("The number has 3 digits")
+    elif type_of_hint == "comparison_hint":
+        if number_to_be_guessed < user_guess:
+            print(f"The number is less than {user_guess}")
+        else:
+            print(f"The number is greater than {user_guess}")
+    chances -= 1 # can not change this value in another function. scope
+    return chances
+
 def play_round(difficulty: int, rounds: int) -> int| None:
     # doesn't know about high score. only job is to play game. updating is done in main. separation of responsibilities
-    chances: int = DIFFICULTIES[difficulty]['chances']
+    chances = DIFFICULTIES[difficulty]['chances']
     difficulty_name = DIFFICULTIES[difficulty]['name']
     print(f"\nGreat! You have selected the {difficulty_name} difficulty level. You have {chances} chances to guess the correct number.\n")
     print(f"Let's start round {rounds}")
@@ -56,10 +152,8 @@ def play_round(difficulty: int, rounds: int) -> int| None:
             end_time = time.perf_counter()
             print(f"Congratulations! You guessed the correct number in {attempts} attempts and it took you {end_time - start_time} seconds. Impressive!")
             return attempts
-        elif number_to_be_guessed < user_guess:
-            print(f"Incorrect! The number is less than {user_guess}")
-        else:
-            print(f"Incorrect! The number is greater than {user_guess}")
+        if attempts + 1 < chances:
+            chances = get_hint(chances, number_to_be_guessed, user_guess)
     print(f"You ran out of chances")
     return None
 
