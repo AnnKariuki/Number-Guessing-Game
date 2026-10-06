@@ -142,7 +142,7 @@ def play_round(difficulty: int, rounds: int) -> int| None:
     difficulty_name = DIFFICULTIES[difficulty]['name']
     print(f"\nGreat! You have selected the {difficulty_name} difficulty level. You have {chances} chances to guess the correct number.\n")
     print(f"Let's start round {rounds}")
-    number_to_be_guessed = 1 # random.randint(1, 100)
+    number_to_be_guessed = random.randint(1, 100)
     attempts = 0
     start_time = time.perf_counter()
     while attempts < chances:
